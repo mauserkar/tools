@@ -18,13 +18,14 @@ RUN apt-get install -fy \
     jq \
     lsb-release \
     make \ 
+    net-tools \
     netcat \ 
     nmap \
-    net-tools \
     python3 \
     python3-pip \
     python3-venv \
     rpl \
+    screen \
     software-properties-common \
     sshpass \ 
     sudo \
