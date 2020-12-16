@@ -1,0 +1,47 @@
+### Python ###
+alias py_server_start='python manage.py runserver localhost:8000'
+py_env() {
+  if [ $1 ] ; then
+    NAME=$1
+    python -m venv /root/py-$NAME && source /root/py-$NAME/bin/activate
+  else
+    python -m venv /root/py-venv-$(date +%H%M-%d%m%Y) && source /root/py-venv-$(date +%H%M-%d%m%Y)/bin/activate
+  fi
+}
+alias pip_upgrade='pip install --upgrade pip'
+alias pip_freeze_requirements='pip freeze > requirements.txt'
+alias pip_install_requirements='pip install -r requirements.txt'
+
+### Ansible ###
+alias an_hello='ansible all -a "/bin/echo hello"'
+alias an_ping='ansible -m ping'
+an_fact() { ansible $1 -m setup; }
+alias ap='ansible-playbook'
+alias apd='ansible-playbook --diff'
+alias apdc='ansible-playbook --diff --check'
+
+### Git ###
+alias git_save="git stash"
+alias git_restore="git stash pop"
+alias git_fast='git add . && git commit -m "up" && git push'
+
+# Network
+alias check_ports='netstat -tulanp'
+check_port_open() { nc -z -v -w1 $1 $2; }
+ip_geo() { curl ipinfo.io/$1; }
+alias ip_public='curl http://icanhazip.com/'
+
+### Common ###
+alias ram_info='free -m -l -t'
+alias cpu_info='lscpu'
+alias disc_info='df -h -x tmpfs -x devpts -x usbfs'
+alias part_info='lsblk -fm'
+alias du='du -ch'
+alias tailf='tail -f'
+alias generate_password='openssl rand -base64 16'
+rpl_env () { envsubst < $1 | $2 -; }
+
+### History ###
+export HISTTIMEFORMAT="%F %T: "
+export HISTFILE=/root/.history-$(whoami | awk '{print $1}' ; exit).log
+export PROMPT_COMMAND='history -a'
