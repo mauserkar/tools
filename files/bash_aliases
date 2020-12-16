@@ -1,3 +1,19 @@
+### Common ###
+alias bash_alias='cat $HOME/.bash_aliases'
+alias ram_info='free -m -l -t'
+alias cpu_info='lscpu'
+alias disc_info='df -h -x tmpfs -x devpts -x usbfs'
+alias part_info='lsblk -fm'
+alias du='du -ch'
+alias tailf='tail -f'
+alias generate_password='openssl rand -base64 16'
+rpl_env () { envsubst < $1 | $2 -; }
+
+### History ###
+export HISTTIMEFORMAT="%F %T: "
+export HISTFILE="$HOME/history-$(whoami | awk '{print $1}' ; exit).log"
+export PROMPT_COMMAND='history -a'
+
 ### Python ###
 alias py_server_start='python manage.py runserver localhost:8000'
 py_env() {
@@ -30,18 +46,3 @@ alias check_ports='netstat -tulanp'
 check_port_open() { nc -z -v -w1 $1 $2; }
 ip_geo() { curl ipinfo.io/$1; }
 alias ip_public='curl http://icanhazip.com/'
-
-### Common ###
-alias ram_info='free -m -l -t'
-alias cpu_info='lscpu'
-alias disc_info='df -h -x tmpfs -x devpts -x usbfs'
-alias part_info='lsblk -fm'
-alias du='du -ch'
-alias tailf='tail -f'
-alias generate_password='openssl rand -base64 16'
-rpl_env () { envsubst < $1 | $2 -; }
-
-### History ###
-export HISTTIMEFORMAT="%F %T: "
-export HISTFILE="$HOME/history-$(whoami | awk '{print $1}' ; exit).log"
-export PROMPT_COMMAND='history -a'

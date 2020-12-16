@@ -38,7 +38,6 @@ RUN apt-get install -fy \
     wget \
     zip 
 
-RUN curl -sL https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | bash
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 RUN curl -s https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
@@ -59,18 +58,21 @@ RUN groupadd --gid 1000 debian \
 RUN mkdir /app && chown debian:debian /app
 
 RUN echo "debian ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-
-COPY files/bash_aliases /home/debian/.bash_aliases
+RUN chown debian:debian /usr/local/bin/
 
 VOLUME [ "/app" ]
 
 USER debian
+
+COPY files/bash_aliases /home/debian/.bash_aliases
 
 RUN pip install pywinrm \
     apache-libcloud \
     urllib3==1.25.4 \
     requests \
     awscli
+
+RUN curl -sL https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | bash
 
 WORKDIR /app
 
