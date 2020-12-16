@@ -27,6 +27,7 @@ RUN apt-get install -fy \
     rpl \
     software-properties-common \
     sshpass \ 
+    sudo \
     telnet \
     telnet \
     traceroute \
@@ -52,19 +53,27 @@ RUN apt-get clean autoclean && \
 RUN ln -s /usr/bin/python3 /usr/bin/python && \
     ln -s /usr/bin/pip3 /usr/bin/pip
 
+RUN groupadd --gid 1000 debian \
+    && useradd --uid 1000 --gid debian --shell /bin/bash --create-home debian
+
+RUN mkdir /app && chown debian:debian /app
+
+RUN echo "debian ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+COPY files/bash_aliases /home/debian/.bash_aliases
+
+VOLUME [ "/app" ]
+
+USER debian
+
 RUN pip install pywinrm \
     apache-libcloud \
     urllib3==1.25.4 \
     requests \
     awscli
 
-COPY files/bash_aliases /root/.bashrc
-
-VOLUME [ "/root", "/app" ]
-
 WORKDIR /app
 
 # How to use:
-    # mkdir -p root 
     # mkdir -p app or mount your workdir
-    # docker run -it --rm -v $(pwd)/root:/root -v $(pwd)/app:/app carlosgaro/tools:latest 
+    # docker run -it --rm -v $(pwd)/app:/app carlosgaro/tools:latest 

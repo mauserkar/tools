@@ -3,9 +3,9 @@ alias py_server_start='python manage.py runserver localhost:8000'
 py_env() {
   if [ $1 ] ; then
     NAME=$1
-    python -m venv /root/py-$NAME && source /root/py-$NAME/bin/activate
+    python -m venv /app/py-$NAME && source /app/py-$NAME/bin/activate
   else
-    python -m venv /root/py-venv-$(date +%H%M-%d%m%Y) && source /root/py-venv-$(date +%H%M-%d%m%Y)/bin/activate
+    python -m venv /app/py-venv-$(date +%H%M-%d%m%Y) && source /app/py-venv-$(date +%H%M-%d%m%Y)/bin/activate
   fi
 }
 alias pip_upgrade='pip install --upgrade pip'
@@ -43,5 +43,5 @@ rpl_env () { envsubst < $1 | $2 -; }
 
 ### History ###
 export HISTTIMEFORMAT="%F %T: "
-export HISTFILE=/root/.history-$(whoami | awk '{print $1}' ; exit).log
+export HISTFILE="$HOME/history-$(whoami | awk '{print $1}' ; exit).log"
 export PROMPT_COMMAND='history -a'
