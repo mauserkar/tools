@@ -42,8 +42,7 @@ RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 RUN curl -s https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 RUN echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list
-RUN echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-stretch-prod stretch main" | tee -a  /etc/apt/sources.list.d/microsoft.list
-
+RUN echo "deb [arch=amd64] https://packages.microsoft.com/debian/10/prod buster main" | tee -a  /etc/apt/sources.list.d/microsoft.list
 RUN apt-get update && apt-get install -fy powershell kubectl && kubectl completion bash > /etc/bash_completion.d/kubectl
 
 RUN apt-get clean autoclean && \
