@@ -21,6 +21,7 @@ RUN apt-get install -fy \
     net-tools \
     netcat \ 
     nmap \
+    openssh-server \
     python3 \
     python3-pip \
     python3-venv \
@@ -39,12 +40,21 @@ RUN apt-get install -fy \
     wget \
     zip 
 
-RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 RUN curl -s https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 RUN echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list
 RUN echo "deb [arch=amd64] https://packages.microsoft.com/debian/10/prod buster main" | tee -a  /etc/apt/sources.list.d/microsoft.list
-RUN apt-get update && apt-get install -fy powershell kubectl && kubectl completion bash > /etc/bash_completion.d/kubectl
+RUN echo "deb https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+
+RUN apt-get update && \
+    apt-get install -fy \
+    powershell \ 
+    kubectl \
+    google-cloud-sdk && \
+    kubectl completion bash > /etc/bash_completion.d/kubectl
+
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
 RUN apt-get clean autoclean && \
     apt-get autoremove --yes && \
