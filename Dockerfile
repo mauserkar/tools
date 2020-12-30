@@ -15,6 +15,7 @@ RUN apt-get install -fy \
     gnupg \
     gnupg-agent \
     gnupg2 \
+    iputils-ping \
     jq \
     lsb-release \
     make \ 
