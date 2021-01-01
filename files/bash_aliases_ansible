@@ -1,0 +1,6 @@
+# Ansible deploy
+alias cd_an_path="cd $AN_PATH"
+alias cd_an_log="cd $AN_LOG"
+alias cd_an_local="cd $AN_LOCAL"
+alias cd_an_repos="cd $AN_REPOS"
+alias cd_an_tmp="cd $AN_TMP"

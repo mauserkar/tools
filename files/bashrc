@@ -1,0 +1,28 @@
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+if [ -f ~/.bash_aliases_secrets ]; then
+    . ~/.bash_aliases_secrets
+    export REPO_CONFIG="~/repos/config"
+    export CLOUD_PATH="~/cloud"
+fi
+
+if [ -f ~/.bash_aliases_work ]; then
+    . ~/.bash_aliases_work
+    export PS1='\e[1;30m\u\e[39m\[@\e[32m\]\W \e[39m> '
+fi
+
+if [ -f ~/.bash_aliases_ansible ]; then
+    . ~/.bash_aliases_ansible
+    export AN_PATH="/opt/setup-ansible"
+    export AN_LOG="$AN_PATH/log"
+    export AN_LOCAL="$AN_PATH/local"
+    export AN_REPOS="$AN_PATH/repos"
+    export AN_TMP="$AN_PATH/tmp"
+    export HISTTIMEFORMAT="%F %T: "
+    export HISTFILE="$AN_PATH/history/history-$(whoami | awk '{print $1}' ; exit).log"
+    export PROMPT_COMMAND='history -a'
+fi
+
+

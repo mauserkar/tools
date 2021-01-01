@@ -30,6 +30,7 @@ RUN apt-get install -fy \
     screen \
     software-properties-common \
     sshpass \ 
+    sshuttle \
     sudo \
     telnet \
     telnet \
