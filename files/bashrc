@@ -19,12 +19,12 @@ fi
 if [ -f ~/.bash_aliases_ansible ]; then
     . ~/.bash_aliases_ansible
     export AN_PATH="/opt/setup-ansible"
-    export AN_LOG="$AN_PATH/log"
+    export AN_LOGS="$AN_PATH/logs"
     export AN_LOCAL="$AN_PATH/local"
     export AN_REPOS="$AN_PATH/repos"
     export AN_TMP="$AN_PATH/tmp"
     export HISTTIMEFORMAT="%F %T: "
-    export HISTFILE="$AN_LOCAL/history/history-$(whoami | awk '{print $1}' ; exit).log"
+    export HISTFILE="$AN_LOGS/history/history-$(whoami | awk '{print $1}' ; exit).log"
     export PROMPT_COMMAND='history -a'
 fi
 

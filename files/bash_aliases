@@ -59,6 +59,11 @@ alias d_login_aws='$(aws ecr get-login --no-include-email --region=eu-west-1)'
 d_log() { docker logs -t --tail 100 -f $1; }
 d_exec() { docker exec -it $1 bash; }
 
+### K8s ###
+alias kc="kubectl"
+alias kc_pods_all="kubectl get pods --all-namespaces -o wide"
+alias kc_api="kubectl api-resources"
+
 ### Lxc ###
 alias lxc_start='lxc-start -n '
 alias lxc_stop='lxc-stop -n '
@@ -124,11 +129,6 @@ alias git_commits='git log --pretty=format:"%h - %an, %ar : %s"'
 alias git_reset="git reset HEAD~1"
 alias git_fast='git add . && git commit -m "up" && git push'
 git_show () { git show --stat --oneline $1; }
-
-### K8s ###
-alias kc="kubectl"
-alias kc_pods="kubectl get pods -o wide"
-alias kc_api="kubectl api-resources"
 
 ### Jq ###
 alias jq_save="jq . -M > output.json"
