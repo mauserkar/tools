@@ -1,3 +1,6 @@
+
+### repo tools ###
+
 if [ -f ~/.bash_aliases_custom ]; then
     . ~/.bash_aliases_custom
 fi
@@ -21,8 +24,8 @@ if [ -f ~/.bash_aliases_ansible ]; then
     export AN_REPOS="$AN_PATH/repos"
     export AN_TMP="$AN_PATH/tmp"
     export HISTTIMEFORMAT="%F %T: "
-    export HISTFILE="$AN_PATH/history/history-$(whoami | awk '{print $1}' ; exit).log"
+    export HISTFILE="$AN_LOCAL/history/history-$(whoami | awk '{print $1}' ; exit).log"
     export PROMPT_COMMAND='history -a'
 fi
 
-
+### repo tools ###
