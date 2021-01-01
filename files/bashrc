@@ -1,5 +1,5 @@
-if [ -f ~/.bash_custom ]; then
-    . ~/.bash_custom
+if [ -f ~/.bash_aliases_custom ]; then
+    . ~/.bash_aliases_custom
 fi
 
 if [ -f ~/.bash_aliases_secrets ]; then
