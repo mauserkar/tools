@@ -9,6 +9,7 @@ RUN apt-get install -fy \
     bash-completion \
     ca-certificates \
     curl \
+    default-mysql-client \
     dnsutils \
     git \
     git \ 
