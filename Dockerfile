@@ -1,6 +1,6 @@
 FROM debian:stable-slim
 
-RUN apt-get update && apt-get upgrade
+RUN apt-get update && apt-get upgrade -fy
 
 RUN apt-get install -fy \
     ansible \
