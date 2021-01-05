@@ -61,7 +61,9 @@ d_exec() { docker exec -it $1 bash; }
 
 ### K8s ###
 alias kc="kubectl"
+alias kc_get_all="kubectl get deployment,svc,pods,pvc,pv,ing --all-namespaces -o wide"
 alias kc_get_pods_all="kubectl get pods --all-namespaces -o wide"
+alias kc_get_services_all="kubectl get services --all-namespaces -o wide"
 alias kc_apply="kubectl apply -f"
 alias kc_delete="kubectl delete -f"
 alias kc_api="kubectl api-resources"
