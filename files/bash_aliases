@@ -11,7 +11,7 @@ alias apt_remove='apt-get remove'
 alias apt_autoremove='apt-get autoremove'
 alias apt_search='apt-cache search'
 
-### Clean cmd ###
+### pretty cmd ###
 alias nano='nano -xc'
 alias wget='wget -c'
 alias du='du -ch'
@@ -20,6 +20,7 @@ alias kk='ls -lathr'
 alias ls='ls --color=always'
 alias ll='ls $LS_OPTIONS -lha'
 alias sl='ls $LS_OPTIONS -lha'
+alias mount_pretty="mount | column -t"
 
 ### User ###
 alias sudo_login='sudo -s'
@@ -74,9 +75,6 @@ alias lxc_stop='lxc-stop -n '
 alias lxc_attach='lxc-attach -n '
 alias lxc_ls_running='lxc-ls --running'
 alias lxc_create_debian='lxc-create -t debian -n '
-
-### Mount ###
-alias mount="mount | column -t"
 
 ### Apache ###
 alias cd_ww='cd /var/www'

@@ -22,6 +22,7 @@ RUN apt-get install -fy \
     make \ 
     net-tools \
     netcat \ 
+    nload \
     nmap \
     openssh-server \
     python3 \
