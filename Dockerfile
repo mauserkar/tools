@@ -11,7 +11,6 @@ RUN apt-get install -fy \
     curl \
     default-mysql-client \
     dnsutils \
-    git \
     git \ 
     mdadm \
     gnupg \
@@ -25,6 +24,7 @@ RUN apt-get install -fy \
     netcat \ 
     nload \
     nmap \
+    openssh-client \
     openssh-server \
     python3 \
     python3-pip \
