@@ -13,6 +13,7 @@ RUN apt-get install -fy \
     dnsutils \
     git \
     git \ 
+    mdadm \
     gnupg \
     gnupg-agent \
     gnupg2 \

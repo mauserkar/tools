@@ -8,3 +8,9 @@ echo "alias kubectl='microk8s kubectl'" >> ~/.bash_aliases
 .  ~/.bash_aliases
 microk8s status --wait-ready
 microk8s enable dns storage ingress rbac registry
+sudo bash -c 'cat << EOF >> /etc/docker/daemon.json
+{
+    "insecure-registries" : ["localhost:32000"]
+}
+EOF'
+sudo systemctl restart docker
