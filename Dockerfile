@@ -1,5 +1,8 @@
 FROM debian:stable-slim
 
+ENV USER debian
+ENV PATH "/home/$USER/.local/bin:$PATH"
+
 RUN apt-get update && apt-get upgrade -fy
 
 RUN apt-get install -fy \
@@ -17,6 +20,7 @@ RUN apt-get install -fy \
     gnupg-agent \
     gnupg2 \
     iputils-ping \
+    ipcalc \
     jq \
     lsb-release \
     make \ 
@@ -68,23 +72,24 @@ RUN apt-get clean autoclean && \
 RUN ln -s /usr/bin/python3 /usr/bin/python && \
     ln -s /usr/bin/pip3 /usr/bin/pip
 
-RUN groupadd --gid 1000 debian \
-    && useradd --uid 1000 --gid debian --shell /bin/bash --create-home debian
+RUN groupadd --gid 1000 $USER \
+    && useradd --uid 1000 --gid $USER --shell /bin/bash --create-home $USER
 
-RUN mkdir /app && chown debian:debian /app
+RUN mkdir /app && chown $USER:$USER /app /home/$USER
 
-RUN echo "debian ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-RUN chown debian:debian /usr/local/bin/
+RUN echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+RUN chown $USER:$USER /usr/local/bin/
 
 VOLUME [ "/app" ]
 
-USER debian
+USER $USER
 
-COPY files/bash_aliases /home/debian/.bash_aliases
+COPY files/bash_aliases /home/$USER/.bash_aliases
 
 RUN pip install pywinrm \
     apache-libcloud \
     urllib3==1.25.4 \
+    databricks-cli \
     requests \
     awscli
 
