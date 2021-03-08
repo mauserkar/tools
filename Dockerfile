@@ -14,16 +14,17 @@ RUN apt-get install -fy \
     curl \
     default-mysql-client \
     dnsutils \
+    dos2unix \
     git \ 
-    mdadm \
     gnupg \
     gnupg-agent \
     gnupg2 \
-    iputils-ping \
     ipcalc \
+    iputils-ping \
     jq \
     lsb-release \
     make \ 
+    mdadm \
     net-tools \
     netcat \ 
     nload \
@@ -56,26 +57,26 @@ RUN echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/a
 RUN echo "deb [arch=amd64] https://packages.microsoft.com/debian/10/prod buster main" | tee -a  /etc/apt/sources.list.d/microsoft.list
 RUN echo "deb https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
 
-RUN apt-get update && \
+RUN ACCEPT_EULA=y apt-get update && \
     apt-get install -fy \
     powershell \ 
+    mssql-tools \
     kubectl \
     google-cloud-sdk && \
     kubectl completion bash > /etc/bash_completion.d/kubectl
-
-RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
 RUN apt-get clean autoclean && \
     apt-get autoremove --yes && \
     rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 RUN ln -s /usr/bin/python3 /usr/bin/python && \
-    ln -s /usr/bin/pip3 /usr/bin/pip
-
+    ln -s /usr/bin/pip3 /usr/bin/pip && \
+    ln -s /opt/mssql-tools/bin/sqlcmd /usr/local/bin/sqlcmd
+    
 RUN groupadd --gid 1000 $USER \
     && useradd --uid 1000 --gid $USER --shell /bin/bash --create-home $USER
 
-RUN mkdir /app && chown $USER:$USER /app /home/$USER
+RUN mkdir -p /app && chown $USER:$USER /app /home/$USER
 
 RUN echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 RUN chown $USER:$USER /usr/local/bin/
@@ -84,6 +85,7 @@ VOLUME [ "/app" ]
 
 USER $USER
 
+COPY files/bashrc /home/$USER/.bashrc
 COPY files/bash_aliases /home/$USER/.bash_aliases
 
 RUN pip install pywinrm \
@@ -94,6 +96,8 @@ RUN pip install pywinrm \
     awscli
 
 RUN curl -sL https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | bash
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+# RUN curl -s "https://get.sdkman.io" | bash && source "/home/$USER.sdkman/bin/sdkman-init.sh"
 
 WORKDIR /app
 

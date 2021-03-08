@@ -7,16 +7,16 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-if [ -f ~/.bash_aliases_custom ]; then
-    . ~/.bash_aliases_custom
+if [ -f ~/.bash_aliases_work ]; then
+    . ~/.bash_aliases_work
 fi
 
 if [ -f ~/.bash_aliases_secrets ]; then
     . ~/.bash_aliases_secrets
 fi
 
-if [ -f ~/.bash_aliases_work ]; then
-    . ~/.bash_aliases_work
+if [ -f ~/bashrc/bash_aliases_custom ]; then
+    . ~/bashrc/bash_aliases_custom
 fi
 
 if [ -f ~/.bash_aliases_ansible ]; then
