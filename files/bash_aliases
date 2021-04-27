@@ -124,6 +124,8 @@ net_check_open_port () { nc -z -v -w1 $1 $2; }
 net_ip_geolocation () { curl ipinfo.io/$1; }
 
 ### Git ###
+alias git_status='git status'
+alias git_rebase_master='git rebase master'
 alias git_save="git stash"
 alias git_restore="git stash pop"
 alias git_fast='git add . && git commit -m "up" && git push'

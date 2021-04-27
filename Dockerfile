@@ -87,6 +87,7 @@ USER $USER
 
 COPY files/bashrc /home/$USER/.bashrc
 COPY files/bash_aliases /home/$USER/.bash_aliases
+COPY Dockerfile /home/$USER/Dockerfile
 
 RUN pip install pywinrm \
     apache-libcloud \
