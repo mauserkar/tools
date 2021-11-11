@@ -118,4 +118,4 @@ WORKDIR /app
 
 # How to use:
     # mkdir -p app or mount your workdir
-    # docker run -it --rm -v $(pwd)/app:/app carlosgaro/tools:latest 
+    # docker run -it --rm -v $(pwd)/app:/app carlosgaro/tools:2.0
