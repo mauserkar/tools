@@ -102,8 +102,8 @@ RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key ad
     echo "sdkman_insecure_ssl=true" >> $HOME/.sdkman/etc/config && \
     bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && sdk install java $JAVA_VERSION" 
 
-RUN apt-get update && \
-    apt-get install -fy \
+RUN sudo apt-get update && \
+    sudo apt-get install -fy \
     docker-ce-cli \
     dotnet-sdk-3.1 \
     dotnet-sdk-5.0 \
