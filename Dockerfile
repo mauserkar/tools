@@ -1,15 +1,17 @@
-FROM debian:stable-slim
+FROM ubuntu:20.04
+LABEL MAINTAINER="carlos@carlosgaro.com"
 
-ENV USER debian
-ENV PATH "/home/$USER/.local/bin:$PATH"
+ENV USER=carlos \
+    DEBIAN_FRONTEND=noninteractive \
+    JAVA_VERSION=8.0.282.j9-adpt
 
-RUN apt-get update && apt-get upgrade -fy
-
-RUN apt-get install -fy \
+RUN apt-get update && \
+    apt-get install -qy \
     ansible \
     apache2-utils \
     apt-transport-https \
-    bash-completion \
+    azure-cli \
+    build-essential \
     ca-certificates \
     curl \
     default-mysql-client \
@@ -49,37 +51,12 @@ RUN apt-get install -fy \
     vim \ 
     wget \
     zip 
-
-RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-RUN curl -s https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-RUN echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list
-RUN echo "deb [arch=amd64] https://packages.microsoft.com/debian/10/prod buster main" | tee -a  /etc/apt/sources.list.d/microsoft.list
-RUN echo "deb https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-
-RUN ACCEPT_EULA=y apt-get update && \
-    apt-get install -fy \
-    powershell \ 
-    mssql-tools \
-    kubectl \
-    google-cloud-sdk && \
-    kubectl completion bash > /etc/bash_completion.d/kubectl
-
-RUN apt-get clean autoclean && \
-    apt-get autoremove --yes && \
-    rm -rf /var/lib/{apt,dpkg,cache,log}/
-
-RUN ln -s /usr/bin/python3 /usr/bin/python && \
-    ln -s /usr/bin/pip3 /usr/bin/pip && \
-    ln -s /opt/mssql-tools/bin/sqlcmd /usr/local/bin/sqlcmd
     
 RUN groupadd --gid 1000 $USER \
-    && useradd --uid 1000 --gid $USER --shell /bin/bash --create-home $USER
-
-RUN mkdir -p /app && chown $USER:$USER /app /home/$USER
-
-RUN echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-RUN chown $USER:$USER /usr/local/bin/
+    && useradd --uid 1000 --gid $USER --shell /bin/bash --create-home $USER && \
+    mkdir -p /app && chown $USER:$USER /app /home/$USER && \
+    echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    chown $USER:$USER /usr/local/bin/
 
 VOLUME [ "/app" ]
 
@@ -87,18 +64,55 @@ USER $USER
 
 COPY files/bashrc /home/$USER/.bashrc
 COPY files/bash_aliases /home/$USER/.bash_aliases
-COPY Dockerfile /home/$USER/Dockerfile
 
-RUN pip install pywinrm \
+RUN pip install \
     apache-libcloud \
-    urllib3==1.25.4 \
+    awscli \
+    coverage \
     databricks-cli \
+    google-auth \
+    msrestazure \
+    mypy \
+    packaging \
+    paramiko \
+    pylint \
+    pyspark \
+    pytest \
+    pywinrm \
     requests \
-    awscli
+    setuptools \
+    urllib3 \
+    virtualenv 
 
-RUN curl -sL https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | bash
-RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
-# RUN curl -s "https://get.sdkman.io" | bash && source "/home/$USER.sdkman/bin/sdkman-init.sh"
+RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -- && \
+    curl -sL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - && \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg && \
+    echo "deb [arch=amd64,armhf,arm64] https://packages.microsoft.com/ubuntu/20.04/prod focal main" | sudo tee -a /etc/apt/sources.list.d/microsoft.list && \
+    echo "deb https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) stable" | sudo tee -a /etc/apt/sources.list.d/docker.list  && \
+    curl -sL "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
+    curl -sL "https://storage.googleapis.com/kubernetes-release/release/v1.22.0/bin/linux/amd64/kubectl" -o /usr/local/bin/kubectl && \
+    curl -sL https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | sudo bash && \
+    sudo chmod a+x "/usr/local/bin/kubectl" && \
+    sudo chmod a+x "/usr/local/bin/docker-compose" && \
+    curl -sL "https://get.sdkman.io" | bash && \
+    echo "sdkman_auto_answer=true" > $HOME/.sdkman/etc/config && \
+    echo "sdkman_auto_selfupdate=false" >> $HOME/.sdkman/etc/config && \
+    echo "sdkman_insecure_ssl=true" >> $HOME/.sdkman/etc/config && \
+    bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && sdk install java $JAVA_VERSION" 
+
+RUN sudo apt-get update && \
+    sudo apt-get install -fy \
+    google-cloud-sdk \
+    powershell 
+
+RUN sudo ACCEPT_EULA=Y apt-get install -y mssql-tools && \
+    ln -s /opt/mssql-tools/bin/sqlcmd /usr/local/bin/sqlcmd && \
+    sudo apt-get clean autoclean -qy && \
+    sudo apt-get autoremove -qy && \
+    sudo apt-get autoremove -qy && \
+    sudo rm -rf /var/lib/{apt,dpkg,cache,log}
 
 WORKDIR /app
 

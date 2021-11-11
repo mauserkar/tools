@@ -124,19 +124,30 @@ net_check_open_port () { nc -z -v -w1 $1 $2; }
 net_ip_geolocation () { curl ipinfo.io/$1; }
 
 ### Git ###
-alias git_status='git status'
-alias git_rebase_master='git rebase master'
 alias git_save="git stash"
 alias git_restore="git stash pop"
 alias git_fast='git add . && git commit -m "up" && git push'
 alias git_commits='git log --pretty=format:"%h - %an, %ar : %s"'
 alias git_reset="git reset HEAD~1"
+alias git_restore_last_commit="git reset --soft HEAD~1"
 alias git_fast='git add . && git commit -m "up" && git push'
 alias git_log="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -p"
-alias git_tag_1='git tag -d 1.0 && git push --delete origin 1.0 && git tag -a 1.0 -m "v1.0" && git push --follow-tags'
-alias git_tag_2='git tag -d 2.0 && git push --delete origin 2.0 && git tag -a 2.0 -m "v2.0" && git push --follow-tags'
-alias git_tag_3='git tag -d 3.0 && git push --delete origin 3.0 && git tag -a 3.0 -m "v3.0" && git push --follow-tags'
 git_show () { git show --stat --oneline $1; }
+alias git_branch="git symbolic-ref --short HEAD"
+alias git_branch_last_20="git --no-pager branch --sort=-committerdate  -a  | head -20"
+git_tag() {
+ git tag -d $1 
+ git push --delete origin $1
+ git tag -a $1 -m "version $1"
+ git push --follow-tags
+}
+git_merge() {
+  current_branch=$(git symbolic-ref --short HEAD)
+  git checkout master
+  git pull -r
+  git checkout $current_branch
+  git merge master
+}
 
 ### Jq ###
 alias jq_save="jq . -M > output.json"
