@@ -117,8 +117,6 @@ RUN sudo ACCEPT_EULA=Y apt-get install -y mssql-tools && \
     sudo apt-get autoremove -qy && \
     sudo rm -rf /var/lib/{apt,dpkg,cache,log}
 
-ADD 
-
 WORKDIR /app
 
 # How to use:
