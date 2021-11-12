@@ -76,3 +76,7 @@
 - virtualenv 
 - wget
 - zip 
+
+## Folder scripts
+https://raw.githubusercontent.com/mauserkar/tools/master/scripts/install/k0s.sh
+https://raw.githubusercontent.com/mauserkar/tools/master/scripts/install/docker.sh

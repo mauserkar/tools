@@ -114,7 +114,6 @@ USER $USER
 COPY files/bashrc /home/$USER/.bashrc
 COPY files/bash_aliases /home/$USER/.bash_aliases
 COPY README.md /home/$USER/
-COPY scripts /home/$USER/scripts
 
 WORKDIR /workdir
 
