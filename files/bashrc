@@ -3,21 +3,10 @@
 
 export PS1='\e[1;30m\u\e[39m\[@\e[32m\]\W \e[39m$ '
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
-if [ -f ~/.bash_aliases_work ]; then
-    . ~/.bash_aliases_work
-fi
-
-if [ -f ~/.bash_aliases_secrets ]; then
-    . ~/.bash_aliases_secrets
-fi
-
-if [ -f ~/bashrc/bash_aliases_custom ]; then
-    . ~/bashrc/bash_aliases_custom
-fi
+if [ -f ~/.bash_aliases ]; then . ~/.bash_aliases ; fi
+if [ -f ~/.bash_aliases_work ]; then . ~/.bash_aliases_work ; fi
+if [ -f ~/.bash_aliases_secrets ]; then . ~/.bash_aliases_secrets ; fi
+if [ -f ~/bashrc/bash_aliases_custom ]; then . ~/bashrc/bash_aliases_custom ; fi
 
 if [ -f ~/.bash_aliases_ansible ]; then
     . ~/.bash_aliases_ansible
