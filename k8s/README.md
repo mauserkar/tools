@@ -1,6 +1,7 @@
 ## Deploys
 ### Carlosgaro tools
 kubectl apply -f https://raw.githubusercontent.com/mauserkar/tools/master/k8s/deploy-tools.yml
+kubectl apply -f https://raw.githubusercontent.com/mauserkar/tools/master/k8s/deploy-echo.yml
 ### Nginx
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.4/deploy/static/provider/baremetal/deploy.yaml
 ### Cert manager
