@@ -1,8 +1,9 @@
 # Linux container with sysadmin tools
-
 ## How to use:
 * mkdir -p $(pwd)/workdir or mount your workdir
 * docker run -it --rm -v $(pwd)/workdir:/workdir carlosgaro/tools:2.0
+* docker run -it --rm --name carlosgaro-tools carlosgaro/tools:2.0
+* docker run -d --rm --name carlosgaro-tools -p 4000:4000 carlosgaro/tools:2.0 nc -l 4000
 
 ## Package installed:
 - ansible
@@ -76,7 +77,3 @@
 - virtualenv 
 - wget
 - zip 
-
-## Folder scripts
-https://raw.githubusercontent.com/mauserkar/tools/master/scripts/install/k0s.sh
-https://raw.githubusercontent.com/mauserkar/tools/master/scripts/install/docker.sh

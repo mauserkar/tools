@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tools
+spec:
+  ports:
+  - port: 4000
+    targetPort: 4000
+  selector:
+    app: tools
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tools
+spec:
+  selector:
+    matchLabels:
+      app: tools
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tools
+    spec:
+      containers:
+      - name: tools
+        image: carlosgaro/tools:2.0
+        ports:
+        - containerPort: 4000

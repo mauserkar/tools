@@ -8,3 +8,5 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docke
 sudo apt-get update
 sudo apt-get install -fy docker-ce docker-ce-cli containerd.io
 sudo usermod -aG docker $USER
+
+# curl -sk https://raw.githubusercontent.com/mauserkar/tools/master/scripts/install/docker.sh | bash
