@@ -26,5 +26,6 @@ spec:
       containers:
       - name: tools
         image: carlosgaro/tools:2.0
+        command: ["nginx", "-g", "daemon off;"]
         ports:
         - containerPort: 4000

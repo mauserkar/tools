@@ -29,6 +29,7 @@ RUN apt-get update && \
     mdadm \
     net-tools \
     netcat \ 
+    nginx \
     nload \
     nmap \
     openssh-client \
@@ -92,7 +93,8 @@ RUN curl -sSL https://packages.microsoft.com/keys/microsoft.asc | tee /etc/apt/t
     echo "sdkman_auto_answer=true" > $HOME/.sdkman/etc/config && \
     echo "sdkman_auto_selfupdate=false" >> $HOME/.sdkman/etc/config && \
     echo "sdkman_insecure_ssl=true" >> $HOME/.sdkman/etc/config && \
-    bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && sdk install java $JAVA_VERSION" 
+    bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && sdk install java $JAVA_VERSION" && \
+    echo "$HOSTNAME - carlosgaro/tools" > /usr/share/nginx/html/index.html
 
 RUN apt-get update && \
     apt-get install -fy \
