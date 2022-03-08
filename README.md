@@ -4,6 +4,7 @@
 * docker run -it --rm -v $(pwd)/workdir:/workdir carlosgaro/tools:2.0
 * docker run -it --rm --name carlosgaro-tools carlosgaro/tools:2.0
 * docker run -d --rm --name carlosgaro-tools -p 4000:4000 carlosgaro/tools:2.0 nc -l 4000
+* kubectl run tools -it --rm --image=carlosgaro/tools:2.0 -- bash
 
 ## Package installed:
 - ansible
